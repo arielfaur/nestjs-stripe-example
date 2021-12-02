@@ -1,0 +1,28 @@
+<h2 class="header">
+  <mat-icon>shopping_cart</mat-icon> Your cart contains
+</h2>
+
+<p *ngIf="error">{{ error }}</p>
+
+<div class="cart" *ngIf="ticket$ | async as ticket">
+  <mat-list-item>
+
+    <div class="item">
+      <div class="description">{{ticket.description}}</div>
+      <div class="price">{{ ticket.price | number }} EUR</div>
+    </div>
+
+  </mat-list-item>
+
+  <div class="actions">
+    <button mat-flat-button color="accent" (click)="buy(ticket)" aria-label="Checkout">
+      <mat-icon>checkout</mat-icon>
+      Buy
+    </button>
+
+    <button mat-flat-button color="warn" routerLink="/" aria-label="Cancel">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </div>
+</div>
