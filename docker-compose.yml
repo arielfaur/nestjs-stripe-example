@@ -74,8 +74,6 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=example
       - ME_CONFIG_BASICAUTH_USERNAME=admin
       - ME_CONFIG_BASICAUTH_PASSWORD=admin123
-    volumes:
-      - dbdata
     depends_on:
       - mongodb
     networks:
