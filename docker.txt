@@ -1,9 +1,11 @@
-Recrear imagen mongodb:
+Recreate mongodb image:
 docker-compose up --build -d mongodb
 
-Depurar volumes sin uso:
+
+Prune unused volumes:
 docker volume prune  
 docker system prune
 
 
+Start containers:
 docker-compose up dev   
