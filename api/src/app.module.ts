@@ -9,7 +9,10 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     TicketModule,
     OrderModule,
-    // MongooseModule.forRoot('mongodb://localhost:27017')
+    MongooseModule.forRoot('mongodb://mongodb:27017/myDatabase', {
+      user: 'test_user',
+      pass: 'test1234'
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
