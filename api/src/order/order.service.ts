@@ -10,6 +10,8 @@ export class OrderService {
   private _stripe: Stripe;
   private _orders: Array<Order> = [];
 
+  private redirect_url = 'http://localhost:4200';
+
   constructor() {
     this._stripe = new Stripe(process.env.STRIPE_TEST_KEY, { apiVersion: '2020-08-27' });
   }
@@ -31,8 +33,8 @@ export class OrderService {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:4200/checkout/success',
-      cancel_url: `http://localhost:4200/checkout/${order.ticket.id}`,
+      success_url: this.redirect_url.concat('/success'),
+      cancel_url: this.redirect_url.concat(`/checkout/${order.ticket.id}`),
     });
 
     return { id: session.id };

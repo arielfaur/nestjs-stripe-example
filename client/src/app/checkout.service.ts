@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {  } from 'ngx-stripe';
 import { Ticket } from './models/ticket.entity';
 import { environment } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
