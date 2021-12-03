@@ -10,6 +10,7 @@ docker-compose up dev
 2. Start Angular frontend
 ```
 cd client
+npm install
 ng serve
 ```
 
