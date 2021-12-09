@@ -1,25 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { of } from 'rxjs';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
 export class TicketService {
-  private _tickets: Array<Ticket> = [];
 
-  create(createTicketDto: CreateTicketDto) {
-    const { ticket } = createTicketDto;
-    this._tickets.push(ticket);
-    return of(ticket);
+  constructor(@InjectModel(Ticket.name) private readonly ticketModel: Model<Ticket>) {}
+
+  async create(createTicketDto: CreateTicketDto) {
+    const newTicket = new this.ticketModel(createTicketDto);
+    return newTicket.save();
   }
 
-  findAll() {
-    return of(this._tickets);
+  async findAll() {
+    return this.ticketModel.find().exec();
   }
 
-  findOne(id: string) {
-    return this._tickets.find(t => t.id === id);
+  async findOne(id: string) {
+    return this.ticketModel
+      .findById({ _id: id })
+      .exec();
   }
 
   update(id: string, updateTicketDto: UpdateTicketDto) {

@@ -1,5 +1,14 @@
-import { Ticket } from "../entities/ticket.entity";
+import { MaxLength, IsNotEmpty, Max, IsString, IsNumber } from 'class-validator';
 
 export class CreateTicketDto {
-    constructor(public ticket: Ticket) {}
+    
+    @IsString()
+    @MaxLength(100)
+    @IsNotEmpty()
+    readonly description: string;
+
+    @Max(1000)
+    @IsNumber()
+    @IsNotEmpty()
+    readonly price: number;
 }

@@ -1,5 +1,13 @@
-import { Order } from "../entities/order.entity";
+import { IsNotEmpty, Max, IsNumber } from 'class-validator';
+import { Ticket } from 'src/ticket/entities/ticket.entity';
 
 export class CreateOrderDto {
-    constructor(public order: Order) {}
+
+    @IsNotEmpty()
+    readonly ticket: Ticket;
+
+    @IsNumber()
+    @Max(10)
+    @IsNotEmpty()
+    readonly qty: number;
 }

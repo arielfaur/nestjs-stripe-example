@@ -8,7 +8,6 @@ import { Order } from './entities/order.entity';
 @Injectable()
 export class OrderService {
   private _stripe: Stripe;
-  private _orders: Array<Order> = [];
 
   private redirect_url = 'http://localhost:4200';
 
@@ -17,7 +16,7 @@ export class OrderService {
   }
 
   async create(createOrderDto: CreateOrderDto) {
-    const { order } = createOrderDto;
+    const { qty, ticket } = createOrderDto;
 
     const session = await this._stripe.checkout.sessions.create({
       line_items: [
@@ -25,23 +24,23 @@ export class OrderService {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: order.ticket.description,
+              name: ticket.description,
             },
-            unit_amount: order.ticket.price*100,
+            unit_amount: ticket.price*100,
           },
-          quantity: order.qty,
+          quantity: qty,
         },
       ],
       mode: 'payment',
       success_url: this.redirect_url.concat('/success'),
-      cancel_url: this.redirect_url.concat(`/checkout/${order.ticket.id}`),
+      cancel_url: this.redirect_url.concat(`/checkout/${ticket.id}`),
     });
 
     return { id: session.id };
   }
 
   findAll() {
-    return of(this._orders);
+    return `This action returns all orders`;
   }
 
   findOne(id: number) {
