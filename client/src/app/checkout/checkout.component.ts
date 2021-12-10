@@ -3,7 +3,7 @@ import { StripeService } from 'ngx-stripe';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { CheckoutService } from '../checkout.service';
-import { Order } from '../models/order.entity';
+import { OrderDto } from '../models/order.entity';
 import { Ticket } from '../models/ticket.entity';
 
 @Component({
@@ -30,9 +30,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   buy(ticket: Ticket) {
-    const order = Order.create(ticket, 1);
-
-    this.checkout.checkout(order)
+    this.checkout.checkout({  qty: 1, ticket })
       .pipe(
         switchMap(session => {
           return this.stripeService.redirectToCheckout({ sessionId: session.id });

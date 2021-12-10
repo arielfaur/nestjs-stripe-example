@@ -8,7 +8,7 @@ import { Ticket } from './entities/ticket.entity';
 @Injectable()
 export class TicketService {
 
-  constructor(@InjectModel(Ticket.name) private readonly ticketModel: Model<Ticket>) {}
+  constructor(@InjectModel(Ticket.name) private readonly ticketModel: Model<Ticket>) { }
 
   async create(createTicketDto: CreateTicketDto) {
     const newTicket = new this.ticketModel(createTicketDto);

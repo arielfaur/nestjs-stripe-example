@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Stripe } from 'stripe';
-import { of } from 'rxjs';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
@@ -33,7 +32,7 @@ export class OrderService {
       ],
       mode: 'payment',
       success_url: this.redirect_url.concat('/success'),
-      cancel_url: this.redirect_url.concat(`/checkout/${ticket.id}`),
+      cancel_url: this.redirect_url.concat(`/checkout/${ticket._id}`),
     });
 
     return { id: session.id };

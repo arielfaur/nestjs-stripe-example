@@ -1,7 +1,7 @@
 <h2 class="header"><mat-icon>local_activity</mat-icon> Select your ticket</h2>
 
 <mat-action-list #tickets>
-  <mat-list-item *ngFor="let ticket of tickets$ | async" [routerLink]="['/checkout', ticket.id]">
+  <mat-list-item *ngFor="let ticket of tickets$ | async" [routerLink]="['/checkout', ticket._id]">
 
     <div class="item">
       <div class="description">{{ticket.description}}</div>

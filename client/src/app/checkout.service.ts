@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Ticket } from './models/ticket.entity';
 import { environment } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
-import { Order } from './models/order.entity';
+import { Order, OrderDto } from './models/order.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +14,21 @@ export class CheckoutService {
 
   getTickets() {
     return this.http.get<Ticket[]>(environment.api.concat('ticket'))
-    .pipe(
-      catchError(this.handleError)
-    );
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   getTicket(id: string) {
     return this.http.get<Ticket>(environment.api.concat(`ticket/${id}`))
-    .pipe(
-      catchError(this.handleError)
-    );
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  checkout(order: Order) {
+  checkout(orderDto: OrderDto) {
     const payload = {
-      order: {
-        ...order
-      }
+      ...orderDto
     }
 
     return this.http.post<{ id: string }>(environment.api.concat('order'), payload)
