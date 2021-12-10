@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Ticket } from './models/ticket.entity';
 import { environment } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
-import { Order, OrderDto } from './models/order.entity';
+import { CheckoutDto } from './models/checkout.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class CheckoutService {
       );
   }
 
-  checkout(orderDto: OrderDto) {
+  checkout(checkoutDto: CheckoutDto) {
     const payload = {
-      ...orderDto
+      ...checkoutDto
     }
 
     return this.http.post<{ id: string }>(environment.api.concat('order'), payload)

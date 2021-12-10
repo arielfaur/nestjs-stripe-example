@@ -10,6 +10,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from './shared/shared.module';
 import { TicketsComponent } from './tickets/tickets.component';
 import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CheckoutSuccessComponent } from './checkout-success/checkout-success.co
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -9,7 +9,11 @@
 
     <div class="item">
       <div class="description">{{ticket.description}}</div>
-      <div class="price">{{ ticket.price | number }} EUR</div>
+      <div class="price">Unit price: {{ ticket.price | number }} EUR</div>
+      <div class="qty">
+        Quantity:
+        <input matInput type="number" [(ngModel)]="qty" min="1">
+      </div>
     </div>
 
   </mat-list-item>

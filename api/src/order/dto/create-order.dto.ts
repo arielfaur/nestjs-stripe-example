@@ -1,13 +1,30 @@
-import { IsNotEmpty, Max, IsNumber } from 'class-validator';
-import { Ticket } from 'src/ticket/entities/ticket.entity';
+import { IsNotEmpty, Max, IsNumber, IsString } from 'class-validator';
 
 export class CreateOrderDto {
 
-    @IsNotEmpty()
-    readonly ticket: Ticket;
+    @IsString()
+    readonly user_id?: string;
 
     @IsNumber()
-    @Max(10)
+    readonly total: number;
+
+    readonly items: ReadonlyArray<CreateOrderItemDto>; 
+}
+
+export class CreateOrderItemDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly ticket_id: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    readonly unit_price: number;
+
+    @IsNumber()
     @IsNotEmpty()
     readonly qty: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    readonly subtotal: number;
 }

@@ -1,21 +1,48 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { Stripe } from 'stripe';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res, HttpStatus } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import Stripe from 'stripe';
+import { CheckoutDto } from './dto/checkout.dto';
 
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  create(@Body() checkoutDto: CheckoutDto) {
+    return this.orderService.create(checkoutDto);
   }
 
+  /**
+   * Order fulfillment
+   * https://stripe.com/docs/payments/checkout/fulfill-orders
+   * @param request 
+   * @param response 
+   * @returns 
+   */
   @Post('webhook')
-  confirm(@Body() confirmation: Stripe.Event) {
-    // TODO catch order success webhook and add order to database
+  webhook(@Req() request: Request, @Res() response: Response) {
+
+    const payload = request['rawBody'];
+    const sig = request.headers['stripe-signature'];
+
+    let event: Stripe.Event;
+
+    try {
+      event = this.orderService.stripe.webhooks.constructEvent(payload, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    } catch (err) {
+      return response.status(HttpStatus.FORBIDDEN).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the checkout.session.completed event
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as Stripe.Checkout.Session;
+
+      // Fulfill the purchase...
+      this.orderService.fulfill(session);
+    }
+
+    response.status(HttpStatus.OK).send();
   }
 
   @Get()
@@ -25,16 +52,6 @@ export class OrderController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+    return this.orderService.findOne(id);
   }
 }

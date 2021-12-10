@@ -2,6 +2,14 @@
   margin: 40px 0;
   padding: 20px;
   border: solid 1px;
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    .qty {
+
+    }
+  }
 }
 
 .actions {

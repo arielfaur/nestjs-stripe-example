@@ -3,7 +3,6 @@ import { StripeService } from 'ngx-stripe';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { CheckoutService } from '../checkout.service';
-import { OrderDto } from '../models/order.entity';
 import { Ticket } from '../models/ticket.entity';
 
 @Component({
@@ -15,6 +14,7 @@ import { Ticket } from '../models/ticket.entity';
 export class CheckoutComponent implements OnInit {
 
   ticket$!: Observable<Ticket>;
+  qty = 1;
   selectedId!: string;
   error: string | undefined;
 
@@ -30,7 +30,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   buy(ticket: Ticket) {
-    this.checkout.checkout({  qty: 1, ticket })
+    this.checkout.checkout({
+      ticket_id: ticket._id,
+      price: ticket.price,
+      qty: this.qty,
+    })
       .pipe(
         switchMap(session => {
           return this.stripeService.redirectToCheckout({ sessionId: session.id });
