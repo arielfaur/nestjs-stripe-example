@@ -28,6 +28,10 @@ ng serve
 
 6. Inspect API Swagger http://localhost:300/api
 
+## Changelog
+
+2021-12-09 Added mongoose service layer
+
 ## TODO
-- Missing MongoDB integration (currently using in-memory storage)
+- ~~Missing MongoDB integration (currently using in-memory storage)~~
 - Tests (unit/integration)
