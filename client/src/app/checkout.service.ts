@@ -4,6 +4,7 @@ import { Ticket } from './models/ticket.entity';
 import { environment } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
 import { CheckoutDto } from './models/checkout.entity';
+import { Order } from './models/order.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,13 @@ export class CheckoutService {
 
   getTicket(id: string) {
     return this.http.get<Ticket>(environment.api.concat(`ticket/${id}`))
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getOrders() {
+    return this.http.get<Order[]>(environment.api.concat('order'))
       .pipe(
         catchError(this.handleError)
       );

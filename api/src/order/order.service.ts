@@ -17,7 +17,7 @@ export class OrderService {
     return this._stripe;
   }
 
-  constructor(@InjectModel(Order.name) private readonly orderModel: Model<Order>, @InjectModel(Ticket.name) private readonly ticketModel: Model<Ticket>) {
+  constructor(@InjectModel(Order.name) private readonly orderModel: Model<Order>) {
     this._stripe = new Stripe(process.env.STRIPE_TEST_KEY, { apiVersion: '2020-08-27' });
   }
 
@@ -45,12 +45,14 @@ export class OrderService {
     return { id: session.id };
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll() {
+    return this.orderModel.find().exec();
   }
 
-  findOne(id: string) {
-    return `This action returns a ${id} order`;
+  async findOne(id: string) {
+    return this.orderModel
+      .findById({ _id: id })
+      .exec();
   }
 
   async fulfill(session: Stripe.Checkout.Session) {

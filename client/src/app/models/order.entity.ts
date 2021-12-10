@@ -1,8 +1,19 @@
-import { Ticket } from "./ticket.entity";
+export interface Order {
+  readonly _id: any;
 
-export class Order {
-  _id!: string;
-  user_id?: string;
-  ticket!: Ticket;
-  qty: number = 0;
+  readonly user_id?: string;
+
+  readonly total: number;
+
+  readonly items: ReadonlyArray<OrderItem>;
+}
+
+export interface OrderItem {
+  readonly ticket_id: string;
+
+  readonly unit_price: number;
+
+  readonly qty: number;
+
+  readonly subtotal: number;
 }

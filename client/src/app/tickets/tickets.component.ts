@@ -11,7 +11,7 @@ export class TicketsComponent implements OnInit {
 
   tickets$ = this.checkout.getTickets();
 
-  constructor(public checkout: CheckoutService) { }
+  constructor(private checkout: CheckoutService) { }
 
   ngOnInit(): void {
 

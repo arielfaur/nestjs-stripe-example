@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { CheckoutService } from '../checkout.service';
 
 @Component({
   selector: 'app-orders',
@@ -8,7 +9,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class OrdersComponent implements OnInit {
 
-  constructor() { }
+  orders$ = this.checkout.getOrders();
+
+  readonly displayedColumns: string[] = ['id', 'customer', 'total'];
+
+  constructor(private checkout: CheckoutService) { }
 
   ngOnInit(): void {
   }
