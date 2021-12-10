@@ -5,9 +5,12 @@
 1. Define NODE_ENV environment variables
 ```
 PORT=3000
-
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxx
 STRIPE_TEST_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+Note: STRIPE_WEBHOOK_SECRET key is required for webhook debugging
+
+
 2. Launch backend services (Nest JS, MongoDB, Mongo-Express, Redis ...)
 ```
 docker-compose up dev
@@ -30,7 +33,7 @@ ng serve
 
 ## Changelog
 
-2021-12-09 Added mongoose service layer
+2021-12-09 Added mongoose service layer and list of ordered items
 
 ## TODO
 - ~~Missing MongoDB integration (currently using in-memory storage)~~
