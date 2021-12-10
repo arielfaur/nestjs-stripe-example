@@ -3,33 +3,41 @@
 ## Instructions
 
 1. Define NODE_ENV environment variables
-```
-PORT=3000
-STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxx
-STRIPE_TEST_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-Note: STRIPE_WEBHOOK_SECRET key is required for webhook debugging
+    ```
+    PORT=3000
+    STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxx
+    STRIPE_TEST_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxx
+    ```
+    Note: STRIPE_WEBHOOK_SECRET key is required for webhook debugging
 
 
 2. Launch backend services (Nest JS, MongoDB, Mongo-Express, Redis ...)
-```
-docker-compose up dev
-````
+    ```
+    docker-compose up dev
+    ````
 
-3. Start Angular frontend
-```
-cd client
-npm install
-ng serve
-```
+3. Listen to Stripe event on localhost (optional)
 
-4. Browse frontend http://localhost:4200
+        stripe login
+    
+        stripe listen --forward-to localhost:4242/order/webhook
 
-5. MongoDB explorer http://localhost:8081
-- Initial myDatabase created
-- Initial tickets collection created
 
-6. Inspect API Swagger http://localhost:3000/api
+4. Start Angular frontend
+    ```
+    cd client
+    npm install
+    ng serve
+    ```
+
+5. Browse frontend on http://localhost:4200
+
+6. MongoDB explorer on http://localhost:8081
+    - Check that an initial myDatabase has been created
+    - Check that an initial tickets collection has been created
+
+
+7. Browse Swagger API on http://localhost:3000/api
 
 ## Changelog
 
