@@ -26,7 +26,7 @@ ng serve
 - Initial myDatabase created
 - Initial tickets collection created
 
-6. Inspect API Swagger http://localhost:300/api
+6. Inspect API Swagger http://localhost:3000/api
 
 ## Changelog
 
