@@ -20,7 +20,7 @@
 
         stripe login
     
-        stripe listen --forward-to localhost:4242/order/webhook
+        stripe listen --forward-to localhost:3000/order/webhook
 
 
 4. Start Angular frontend
